@@ -1,11 +1,14 @@
 package com.Ulearn.PackageService.entity;
 
-
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -14,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 @Table(name="tbl_inst_package")
 public class PackageEntity{
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="PK_ID")
 	private Long pkId;
 	@Column(name="INST_ID")
@@ -44,9 +48,14 @@ public class PackageEntity{
 	@Column(name = "PK_STATUS")
 	private String pkStatus;
 	@Column(name="CREATED_ON")
+	@JsonFormat(pattern =  "yyyy-MM-dd",shape = Shape.STRING)
 	private Date createdOn;
 	@Column(name="UPDATED_ON")
+	@JsonFormat(pattern =  "yyyy-MM-dd",shape = Shape.STRING)
 	private Date updatedOn;
+	@ManyToOne
+	@JoinColumn(name="INST_ID",insertable = false,updatable = false)
+	private InstituteEntity instituteEntity;
 	public PackageEntity() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -167,8 +176,8 @@ public class PackageEntity{
 	public Date getCreatedOn() {
 		return createdOn;
 	}
-	public Date setCreatedOn(Date date) {
-		return this.createdOn = date;
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 	}
 	public Date getUpdatedOn() {
 		return updatedOn;
@@ -176,6 +185,5 @@ public class PackageEntity{
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
-	
 	
 }
